@@ -1,3 +1,45 @@
-<p>
-  beer-details works!
-</p>
+<div class="row">
+  <div *ngIf="hasError;else successContent">
+    <h2>An error occured please try again!</h2>
+  </div>
+  <ng-template #successContent>
+    <div *ngIf="isLoading;else content">
+      <h2>Loading Beer...</h2>
+    </div>
+    <ng-template #content>
+      <div *ngIf="beer.id == undefined;else beerDetails">
+        <h2>No beer has been found!</h2>
+      </div>
+      <ng-template #beerDetails>
+        <div class="col-md-10 offset-1">
+          <div class="card">
+            <img src="{{beer.labels.large}}" alt="beer image" *ngIf="beer.labels !== undefined">
+            <div class="card-body">
+              <h2 class="card-title">{{beer.nameDisplay}}</h2>
+              <h4 class="text-muted">{{beer.style.category.name}}</h4>
+              <p class="card-text">{{beer.description}}</p>
+              <br>
+              <div *ngIf="beer.style !== undefined">
+                <h3>Style</h3>
+                <h4 class="text-muted">{{beer.style.name}}</h4>
+                <p class="card-text">{{beer.style.description}}</p>
+              </div>
+              <br>
+              <h5 class="card-subtitle mb-2 text-muted">
+                Created at: {{beer.createDate}}
+                <span class="badge badge-{{beer.isOrganic === 'y' ? 'success': 'danger'}}">
+                  {{beer.isOrganic === 'Y' ? 'Organic': 'Not Organic'}}
+                </span>
+                <br>
+              </h5>
+            </div>
+            <div class="card-footer">
+              <a [routerLink]="['/beers']" class="card-link">Go back to all beers</a>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+</div>
+

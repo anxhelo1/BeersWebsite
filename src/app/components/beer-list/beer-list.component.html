@@ -36,11 +36,14 @@
       <ng-template #beerList>
         <div class="col-md-4" *ngFor="let b of beers">
           <div class="card">
+            <img  src="{{b.labels.medium}}" alt="beer image" *ngIf="b.labels !== undefined">
             <div class="card-body">
               <h4 class="card-title">{{b.nameDisplay}}</h4>
               <h6 class="card-subtitle mb-2 text-muted">Description</h6>
               <p class="card-text">{{(b.description?.length>300)? (b.description | slice:0:300)+'..':(b.description)
                 }}</p>
+            </div>
+            <div class="card-footer">
               <a [routerLink]="['/beers',b.id]" class="card-link">See more</a>
             </div>
           </div>
