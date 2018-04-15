@@ -6,7 +6,7 @@ import {environment} from 'environments/environment';
 @Injectable()
 export class BeerService {
 
-  constructor(private httpClient: HttpClient) {
+  constructor(protected httpClient: HttpClient) {
   }
 
   getBeers(search: string = '', order: string = 'name', sort: string = 'ASC'): Observable<any> {
