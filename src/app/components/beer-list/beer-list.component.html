@@ -22,25 +22,30 @@
       <button (click)="onSearchClick()" type="submit" class="btn btn-primary">Search</button>
     </form>
   </div>
-  <div *ngIf="isLoading;else content">
-    <h2>Loading Beers...</h2>
+  <div *ngIf="hasError;else successContent">
+    <h2>An error occured please try again!</h2>
   </div>
-  <ng-template #content>
-    <div *ngIf="beers.length == 0;else beerList">
-      <h2>No beers match the search criteria</h2>
+  <ng-template #successContent>
+    <div *ngIf="isLoading;else content">
+      <h2>Loading Beers...</h2>
     </div>
-    <ng-template #beerList>
-      <div class="col-md-4" *ngFor="let b of beers">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{b.nameDisplay}}</h4>
-            <h6 class="card-subtitle mb-2 text-muted">Description</h6>
-            <p class="card-text">{{(b.description?.length>300)? (b.description | slice:0:300)+'..':(b.description)
-              }}</p>
-            <a [routerLink]="['/beers',b.id]" class="card-link">See more</a>
+    <ng-template #content>
+      <div *ngIf="beers.length == 0;else beerList">
+        <h2>No beers match the search criteria</h2>
+      </div>
+      <ng-template #beerList>
+        <div class="col-md-4" *ngFor="let b of beers">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">{{b.nameDisplay}}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Description</h6>
+              <p class="card-text">{{(b.description?.length>300)? (b.description | slice:0:300)+'..':(b.description)
+                }}</p>
+              <a [routerLink]="['/beers',b.id]" class="card-link">See more</a>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-template>
     </ng-template>
   </ng-template>
 </div>

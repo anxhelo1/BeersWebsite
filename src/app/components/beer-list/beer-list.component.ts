@@ -15,9 +15,11 @@ export class BeerListComponent implements OnInit {
   public searchTerm: string;
   public order: string;
   public sort: string;
+  public hasError: boolean;
 
   constructor(private beerService: BeerService) {
     this.beers = [];
+    this.hasError = false;
     this.searchTerm = '';
     this.order = 'name';
     this.sort = 'ASC';
@@ -25,11 +27,17 @@ export class BeerListComponent implements OnInit {
 
   loadBeers() {
     this.isLoading = true;
+    this.hasError = false;
     this.beerService.getBeers(this.searchTerm, this.order, this.sort).subscribe(res => {
-      this.beers = res.data === undefined ? []
-        : res.data.filter(b => b.nameDisplay !== undefined || b.description !== undefined);
-      this.isLoading = false;
-    });
+        this.beers = res.data === undefined ? []
+          : res.data.filter(b => b.nameDisplay !== undefined || b.description !== undefined);
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.hasError = true;
+      }
+    );
   }
 
   ngOnInit() {
