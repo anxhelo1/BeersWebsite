@@ -3,6 +3,7 @@ export class Beer {
   public name: string;
   public nameDisplay: string;
   public description: string;
+  public isOrganic: string;
   public statusDisplay: string;
   public glass: {
     name: string;
@@ -13,6 +14,15 @@ export class Beer {
     description: string;
     createDate: string;
     updateDate: string;
+  };
+  category: {
+    name: string;
+    description: string;
+  };
+  labels: {
+    icon: string;
+    medium: string;
+    large: string;
   }
 
 }
