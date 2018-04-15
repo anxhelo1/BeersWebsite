@@ -1,12 +1,46 @@
 <div class="row">
-  <div class="col-md-4" *ngFor="let b of beers">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">{{b.nameDisplay}}</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">{{(b.description?.length>300)? (b.description | slice:0:300)+'..':(b.description) }}</p>
-        <a routerLink="/beers/{{b.id}}" class="card-link">See more</a>
+  <div class="col-md-12">
+    <form class="form-inline">
+      <div class="form-group">
+        <input [(ngModel)]="searchTerm" name="searchTerm" id="searchTerm" type="text" class="form-control"
+               placeholder="Search for beers...">
       </div>
-    </div>
+      <div class="form-group">
+        <label> Order by: </label>
+        <select name="order" id="order" [(ngModel)]="order" class="form-control">
+          <option value="name">name</option>
+          <option value="description">description</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Sort: </label>
+        <select name="sort" id="sort" [(ngModel)]="sort" class="form-control">
+          <option value="ASC">ASC</option>
+          <option value="DESC">DESC</option>
+        </select>
+      </div>
+      <button (click)="onSearchClick()" type="submit" class="btn btn-primary">Search</button>
+    </form>
   </div>
+  <div *ngIf="isLoading;else content">
+    <h2>Loading Beers...</h2>
+  </div>
+  <ng-template #content>
+    <div *ngIf="beers.length == 0;else beerList">
+      <h2>No beers match the search criteria</h2>
+    </div>
+    <ng-template #beerList>
+      <div class="col-md-4" *ngFor="let b of beers">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{b.nameDisplay}}</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Description</h6>
+            <p class="card-text">{{(b.description?.length>300)? (b.description | slice:0:300)+'..':(b.description)
+              }}</p>
+            <a [routerLink]="['/beers',b.id]" class="card-link">See more</a>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
 </div>

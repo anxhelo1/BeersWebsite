@@ -12,18 +12,31 @@ export class BeerListComponent implements OnInit {
 
   public beers: Beer[];
   public isLoading: boolean;
+  public searchTerm: string;
+  public order: string;
+  public sort: string;
 
   constructor(private beerService: BeerService) {
     this.beers = [];
+    this.searchTerm = '';
+    this.order = 'name';
+    this.sort = 'ASC';
+  }
+
+  loadBeers() {
+    this.isLoading = true;
+    this.beerService.getBeers(this.searchTerm, this.order, this.sort).subscribe(res => {
+      this.beers = res.data === undefined ? []
+        : res.data.filter(b => b.nameDisplay !== undefined || b.description !== undefined);
+      this.isLoading = false;
+    });
   }
 
   ngOnInit() {
-    this.isLoading = true;
-    this.beerService.getBeers().subscribe(res => {
-      this.beers = res.data.filter(b => b.nameDisplay !== undefined || b.description !== undefined);
-      this.isLoading = false;
-    });
-
+    this.loadBeers();
   }
 
+  onSearchClick() {
+    this.loadBeers();
+  }
 }

@@ -8,8 +8,9 @@ export class BeerService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getBeers(): Observable<any> {
-    return this.httpClient.get('http://api.brewerydb.com/v2/beers?key=ee8a1a84bc76fd7d7ae6dd0dc45583e3');
+  getBeers(search: string = '', order: string = 'name', sort: string = 'ASC'): Observable<any> {
+    return this.httpClient
+      .get(`http://api.brewerydb.com/v2/beers?key=ee8a1a84bc76fd7d7ae6dd0dc45583e3&name=${search}&order=${order}&sort=${sort}`);
   }
 
   getBeerById(id: string): Observable<any> {

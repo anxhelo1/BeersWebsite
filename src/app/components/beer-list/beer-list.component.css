@@ -4,3 +4,7 @@
 .card-text{
   min-height: 200px;
 }
+.form-inline {
+  margin-bottom: 20px;
+}
+
