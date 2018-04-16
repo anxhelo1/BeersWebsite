@@ -4,14 +4,14 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import {BeerService} from './beer.service';
 import {Beer} from '../models/Beer';
+import {IBeerService} from './IBeer.service';
 
 @Injectable()
-export class MockbeerService extends BeerService {
+export class MockbeerService implements IBeerService {
 
   protected data: Beer[];
 
-  constructor(protected httpClient: HttpClient) {
-    super(httpClient);
+  constructor() {
     this.data = [
       {
         id: 'id1',

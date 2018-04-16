@@ -1,12 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {BeerService} from '../../services/beer.service';
 import {Beer} from '../../models/Beer';
+import {IBeerService} from '../../services/IBeer.service';
 
 @Component({
   selector: 'app-beer-list',
   templateUrl: './beer-list.component.html',
   styleUrls: ['./beer-list.component.css'],
-  providers: [BeerService]
+  providers: [
+    {provide: IBeerService, useClass: BeerService}
+  ]
 })
 export class BeerListComponent implements OnInit {
 
@@ -17,7 +20,7 @@ export class BeerListComponent implements OnInit {
   public sort: string;
   public hasError: boolean;
 
-  constructor(private beerService: BeerService) {
+  constructor(private beerService: IBeerService) {
     this.beers = [];
     this.hasError = false;
     this.searchTerm = '';
